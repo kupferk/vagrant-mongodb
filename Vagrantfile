@@ -23,11 +23,11 @@ Vagrant.configure("2") do |config|
       # when puppet tries to parse its manifests
       config.vm.provision :shell, :path => "provision/scripts/main.sh"
       
-      node.vm.provision :puppet do |puppet|
+      config.vm.provision :puppet do |puppet|
     	puppet.manifests_path = "provision/puppet/manifests"
         puppet.manifest_file = 'site.pp'
         puppet.module_path = [ 'provision/puppet/modules' ]
         puppet.options = "--verbose --debug"
-  	  end
+      end
 end
 

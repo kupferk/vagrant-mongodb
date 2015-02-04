@@ -6,6 +6,7 @@ package {ruby:ensure=> [latest,installed]}
 
 $datadir = '/var/lib/mongodb'
 $logdir = '/var/log/mongodb'
+$logfile = '/var/log/mongodb/mongo.log'
 
 group {'mongodb':
   ensure => present,
@@ -18,30 +19,26 @@ user {'mongodb':
   home => $datadir
 }
 
-file {$datadir:
-  ensure => directory
-  user => 'mongodb',
-  group => 'mongodb',
-  require => User['mongodb']
-}
 file {$logdir:
-  ensure => directory
-  user => 'mongodb',
+  ensure => directory,
+  owner => 'mongodb',
   group => 'mongodb',
-  require => User['mongodb']
-}
-
+  mode => '0755'
+}->
 class {'::mongodb::globals':
   manage_package_repo => true,
   user => 'mongodb',
   group => 'mongodb',
+  bind_ip => ['0.0.0.0'],
   require => User['mongodb']
 }->
 class {'::mongodb::server': 
   ensure => present,
-  logpath => $logdir,
+  logpath => $logfle,
   dbpath => $datadir,
-  require => [File[$logdir], File[$datadir]]
+  diaglog => 7,
+  verbose => true
+
 }->
 class {'::mongodb::client': }
 

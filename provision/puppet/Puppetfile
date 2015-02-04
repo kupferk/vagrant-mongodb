@@ -1,7 +1,7 @@
 # Puppetfile
 # Configuration for librarian-puppet. For example:
 #
-forge "http://forge.puppetlabs.com"
-mod "kupferk/storm"
-mod "kupferk/zookeeper"
+#forge "http://forge.puppetlabs.com"
+forge "https://forgeapi.puppetlabs.com"
+mod "puppetlabs/mongodb"
 
