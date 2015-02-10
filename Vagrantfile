@@ -1,6 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# You need to have the following vagrant plugins installed
+#       vagrant-lxc
+#       vagrant-hostmanager
+
+
 LXC_BRIDGE = 'lxcbr0'
 
 
@@ -8,6 +13,11 @@ Vagrant.configure("2") do |config|
       config.vm.hostname = "mongodb"
       config.vm.box = "trusty64"
       config.vm.box_url = "http://files.vagrantup.com/trusty64.box"
+      
+      config.hostmanager.enabled = true
+      config.hostmanager.manage_host = true
+      config.hostmanager.ignore_private_ip = false
+      config.hostmanager.include_offline = true      
       
       config.vm.provider :lxc do |lxc, override|
       	override.vm.box = "fgrehm/trusty64-lxc"
